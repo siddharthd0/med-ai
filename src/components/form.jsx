@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import Head from 'next/head';
-import Nav from '../components/navigation';
+import Nav from '../components/navigation';  
 import axios from 'axios';
-
+import { Input, Button, Textarea, Select, Option } from '@material-tailwind/react';
 
 const FormPage = () => {
   const [formData, setFormData] = useState({
@@ -43,53 +43,89 @@ const FormPage = () => {
       <Nav />
 
       <main className="p-10 space-y-10">
-        <div className="text-center">
+        <div className="text-center mt-16">
           <h1 className="text-4xl font-semibold">Patient Scheduling Submission Form</h1>
         </div>
 
         <div className="max-w-lg mx-auto bg-white p-8 rounded-lg shadow-md">
           <form onSubmit={handleSubmit}>
             <div className="mb-6">
-              <label className="block text-sm font-medium text-gray-600">Patient Name</label>
-              <input type="text" className="mt-1 p-3 w-full rounded-md border border-gray-300 focus:border-blue-400 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
-            </div>
-            
-            <div className="mb-6">
-              <label className="block text-sm font-medium text-gray-600">Email</label>
-              <input type="email" className="mt-1 p-3 w-full rounded-md border border-gray-300 focus:border-blue-400 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
-            </div>
-
-            <div className="mb-6">
-              <label className="block text-sm font-medium text-gray-600">Preferred Date of Appointment</label>
-              <input type="date" className="mt-1 p-3 w-full rounded-md border border-gray-300 focus:border-blue-400 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
+              <Input 
+                type="text"
+                name="patientName"
+                value={formData.patientName}
+                onChange={handleChange}
+                label="Patient Name"
+              />
             </div>
 
             <div className="mb-6">
-              <label className="block text-sm font-medium text-gray-600">Preferred Time of Appointment</label>
-              <input type="time" className="mt-1 p-3 w-full rounded-md border border-gray-300 focus:border-blue-400 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
+              <Input 
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                label="Email"
+              />
             </div>
 
             <div className="mb-6">
-              <label className="block text-sm font-medium text-gray-600">Type of Consultation</label>
-              <select className="mt-1 p-3 w-full rounded-md border border-gray-300 focus:border-blue-400 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
-                <option>General Consultation</option>
-                <option>Specialist Consultation</option>
-              </select>
+              <Input 
+                type="date"
+                name="preferredDate"
+                value={formData.preferredDate}
+                onChange={handleChange}
+                label="Preferred Date of Appointment"
+              />
             </div>
 
             <div className="mb-6">
-              <label className="block text-sm font-medium text-gray-600">Doctor or Nurse Preference</label>
-              <input type="text" className="mt-1 p-3 w-full rounded-md border border-gray-300 focus:border-blue-400 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
+              <Input 
+                type="time"
+                name="preferredTime"
+                value={formData.preferredTime}
+                onChange={handleChange}
+                label="Preferred Time of Appointment"
+              />
             </div>
 
             <div className="mb-6">
-              <label className="block text-sm font-medium text-gray-600">Reason for Visit</label>
-              <textarea rows="4" className="mt-1 p-3 w-full rounded-md border border-gray-300 focus:border-blue-400 focus:ring focus:ring-blue-200 focus:ring-opacity-50"></textarea>
+              <Select 
+                name="consultationType"
+                value={formData.consultationType}
+                onChange={handleChange}
+                label="Type of Consultation"
+              >
+                <Option value="General Consultation">General Consultation</Option>
+                <Option value="Specialist Consultation">Specialist Consultation</Option>
+                <Option value="Follow-up Consultation">Follow-up Consultation</Option>
+                <Option color="red" value="Emergency">Emergency</Option>
+              </Select>
             </div>
 
-            <button type="submit" className="w-full bg-blue-500 text-white p-3 rounded-md hover:bg-blue-400 transition duration-200">
+            <div className="mb-6">
+              <Input 
+                type="text"
+                name="doctorPreference"
+                value={formData.doctorPreference}
+                onChange={handleChange}
+                label="Doctor or Nurse Preference"
+              />
+            </div>
+
+            <div className="mb-6">
+              <Textarea 
+                name="reason"
+                value={formData.reason}
+                onChange={handleChange}
+                label="Reason for Visit"
+                rows={4}
+              />
+            </div>
+
+            <Button fullWidth color="black" type="submit" ripple="light">
               Schedule Appointment
-            </button>
+            </Button>
           </form>
         </div>
       </main>

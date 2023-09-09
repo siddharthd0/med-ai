@@ -3,7 +3,7 @@ import Head from "next/head";
 import Nav from "../components/navigation";
 import Lottie from "lottie-react";
 import { useEffect, useState } from "react";
-
+import {Button } from "@material-tailwind/react";
 export default function Home() {
   const [bgAnimationData, setBgAnimationData] = useState(null);
 
@@ -60,20 +60,20 @@ export default function Home() {
             </p>
 
             <div className="flex justify-center items-center mb-10 space-x-4 animate__animated animate__bounceIn">
-              <button className="text-blue-500 border-2 border-blue-500 rounded-full px-6 py-2 flex items-center transition-all duration-300 ease-in-out hover:bg-blue-500 hover:text-white">
+              <Button variant="outlined" className="text-blue-500 border-2 border-blue-500 rounded-full px-6 py-2 flex items-center transition-all duration-300 ease-in-out hover:bg-blue-500 hover:text-white">
                 <i className="fas fa-calendar-alt mr-2"></i>
                 <span font-nunito>Schedule Appointment</span>
-              </button>
-              <button className="font-nunito text-green-500 border-2 border-green-500 rounded-full px-6 py-2 flex items-center transition-all duration-300 ease-in-out hover:bg-green-500 hover:text-white">
+              </Button>
+              <Button variant="outlined" className="font-nunito text-green-500 border-2 border-green-500 rounded-full px-6 py-2 flex items-center transition-all duration-300 ease-in-out hover:bg-green-500 hover:text-white">
                 <i className="fas fa-tachometer-alt mr-2"></i>
                 <a href="/admindashboard">View Admin Dashboard</a>
-              </button>
+              </Button>
             </div>
           </div>
         </div>
 
         <div className="relative min-h-screen bg-gradient-to-r from-blue-100 via-white to-blue-100">
-          <div className="bg-gradient-to-r from-blue-100 via-white to-blue-100 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 p-8 animate__animated animate__fadeInUp h-screen">
+          <div className="bg-gradient-to-r from-blue-100 via-white to-blue-100 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 p-8 animate__animated animate__fadeInUp">
             {" "}
             {/* Increased height with h-80 */}
             <div className="font-nunito border rounded p-4 hover:shadow-lg transition duration-200">
