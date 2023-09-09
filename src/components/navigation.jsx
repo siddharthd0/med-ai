@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 const Navbar = () => {
   return (
-    <nav className="bg-white text-gray-800 p-4 shadow">
+    <nav className="z-1000 bg-white text-gray-800 p-4 shadow">
       <div className="container mx-auto flex justify-between items-center">
         <Link legacyBehavior href="/">
           <a className="text-2xl font-semibold transition-all duration-300 ease-in-out transform hover:scale-105 hover:text-blue-500">
