@@ -1,0 +1,124 @@
+{
+  "generated_schedule": [
+    {
+      "change_reason": "",
+      "doctors_note": "Dear Pranith,\n\nThank you for choosing our medical practice for your appointment. I have reviewed your medical records and understand that you are suffering from severe depression.\n\nBefore the appointment, please make sure to get a good night's sleep and avoid consuming any alcoholic beverages. It will also be helpful if you can jot down any specific concerns or symptoms you would like to discuss during our session. Please arrive at least 10 minutes early and bring any relevant medical reports or medications.\n\nLooking forward to meeting you and discussing a treatment plan to help you manage your depression effectively.\n\nBest regards,\nNP. Brown",
+      "email": "seriousbro23@gmail.com",
+      "exam_room": 1,
+      "nature": "Mental Health",
+      "patient": "pranith",
+      "phoneNumber": "2088108585",
+      "provider": "NP. Brown",
+      "start_time": "2023-09-11 09:30",
+      "urgency": "Routine"
+    },
+    {
+      "change_reason": "",
+      "doctors_note": "Dear Aditya,\n\nWe appreciate you choosing our clinic for your medical needs. Based on your appointment request, I understand that you have Down syndrome and require assistance with managing COVID-19 concerns.\n\nBefore your visit, it would be beneficial to maintain good hygiene practices, such as regular handwashing and wearing a mask in crowded places. Additionally, ensure that you have all your necessary medical records updated to provide a comprehensive evaluation.\n\nI look forward to meeting you and discussing your specific concerns regarding Down syndrome and COVID-19.\n\nWarm regards,\nNurse Lee",
+      "email": "adityasahas2025@gmail.com",
+      "exam_room": 2,
+      "nature": "Down syndrome and covid",
+      "patient": "aditya",
+      "phoneNumber": "5597941156",
+      "provider": "Nurse Lee",
+      "start_time": "2023-09-11 12:15",
+      "urgency": "Routine"
+    },
+    {
+      "change_reason": "",
+      "doctors_note": "Dear Bob,\n\nThank you for choosing our clinic for your eye examination and infection concern. To ensure the most accurate diagnosis, I recommend refraining from wearing contact lenses for at least 24 hours before the appointment.\n\nPlease bring any relevant medical reports or prescriptions with you. If you experience any sudden changes in vision or worsening symptoms before our scheduled appointment, please reach out to our clinic immediately.\n\nI look forward to meeting you and providing the appropriate treatment to address your eye health concerns.\n\nKind regards,\nDr. Smith",
+      "email": "seriousbro23@gmail.com",
+      "exam_room": 3,
+      "nature": "Eye exam and infection",
+      "patient": "Bob",
+      "phoneNumber": "2088108585",
+      "provider": "Dr. Smith",
+      "start_time": "2023-09-11 15:45",
+      "urgency": "Emergency"
+    },
+    {
+      "change_reason": "",
+      "doctors_note": "Dear Kaushal Kurpad,\n\nThank you for choosing our medical practice. Based on your appointment request, I understand that you require regular support due to your autism.\n\nPrior to your visit, please make sure to carry any prescribed medications along with relevant medical records for my review. It would also be helpful if you could recount any specific concerns or difficulties you are facing in your daily routine.\n\nI look forward to our meeting, where we can discuss strategies and techniques to enhance your daily functioning and quality of life.\n\nWarm regards,\nNP. Davis",
+      "email": "moonyislive@gmail.com",
+      "exam_room": 4,
+      "nature": "Daily",
+      "patient": "Kaushal kurpad",
+      "phoneNumber": "2088108585",
+      "provider": "NP. Davis",
+      "start_time": "2023-09-12 10:00",
+      "urgency": "Routine"
+    },
+    {
+      "change_reason": "",
+      "doctors_note": "Dear Sid,\n\nThank you for choosing our clinic for your medical needs. Based on your appointment request, I understand that you require assistance for your sickness and cold symptoms.\n\nIn preparation for our meeting, I recommend drinking plenty of fluids and getting enough rest to support your recovery. It would also be helpful if you could provide a detailed account of your symptoms and any additional concerns you would like to discuss during the appointment.\n\nI look forward to meeting you and providing the appropriate care to help alleviate your sickness and cold symptoms.\n\nBest regards,\nNurse Patel",
+      "email": "siddharthduggal2013@gmail.com",
+      "exam_room": 5,
+      "nature": "Sickness and cold",
+      "patient": "sid",
+      "phoneNumber": "2088108585",
+      "provider": "Nurse Patel",
+      "start_time": "2023-09-12 14:45",
+      "urgency": "Non-Emergency"
+    },
+    {
+      "change_reason": "",
+      "doctors_note": "Dear John Doe,\n\nThank you for choosing our clinic for your mental well-being checkup. It is important to prioritize your mental health.\n\nIn order to make the most of our appointment, I kindly request that you reflect on any specific concerns you would like to address during our session. Please arrive a few minutes in advance to complete any necessary paperwork.\n\nI look forward to meeting you and discussing strategies for enhancing your mental well-being.\n\nWarm regards,\nDr. Johnson",
+      "email": "johndoe@gmail.com",
+      "exam_room": 6,
+      "nature": "Mental well-being checkup",
+      "patient": "John Doe",
+      "phoneNumber": "2088108585",
+      "provider": "Dr. Johnson",
+      "start_time": "2023-09-12 17:30",
+      "urgency": "Non-Emergency"
+    },
+    {
+      "change_reason": "",
+      "doctors_note": "Dear Alexandar Hamilton,\n\nThank you for choosing our clinic for your routine skin check. Regular preventive appointments are vital for maintaining good skin health.\n\nBefore the visit, please refrain from using any topical creams or lotions on the areas that will be examined. It is also helpful if you could provide a brief history of any skin conditions you may have experienced in the past.\n\nI look forward to our meeting, during which I will perform a comprehensive skin examination and address any concerns you may have.\n\nKind regards,\nDr. Smith",
+      "email": "johndoe@gmail.com",
+      "exam_room": 7,
+      "nature": "Preventive",
+      "patient": "Alexandar Hamilton",
+      "phoneNumber": "2088108585",
+      "provider": "Dr. Smith",
+      "start_time": "2023-09-13 11:15",
+      "urgency": "Non-Emergency"
+    },
+    {
+      "change_reason": "",
+      "doctors_note": "Dear Kevin Jones,\n\nThank you for choosing our clinic for your six-month dental cleaning. Regular oral hygiene appointments are essential in maintaining good dental health.\n\nPrior to your visit, please ensure that you brush and floss your teeth thoroughly. It would also be beneficial if you avoid consuming any food or beverages at least one hour before the appointment.\n\nI look forward to meeting you and providing comprehensive dental care to ensure your oral health remains in optimal condition.\n\nBest regards,\nDr. Johnson",
+      "email": "johndoe@gmail.com",
+      "exam_room": 1,
+      "nature": "Routine",
+      "patient": "Kevin Jones",
+      "phoneNumber": "2088108585",
+      "provider": "Dr. Johnson",
+      "start_time": "2023-09-13 14:30",
+      "urgency": "Non-Emergency"
+    },
+    {
+      "change_reason": "",
+      "doctors_note": "Dear Siddharth,\n\nThank you for choosing our clinic for your urgent medical needs. I understand that you require immediate attention.\n\nPrior to the appointment, I kindly request that you arrive at least 15 minutes early to complete the necessary paperwork. If your condition worsens before the scheduled time, please do not hesitate to reach out to our clinic for immediate assistance.\n\nI look forward to meeting you and ensuring that the appropriate care is provided to address your urgent medical concerns.\n\nWarm regards,\nNP. Brown",
+      "email": "siddharth@techoptimum.org",
+      "exam_room": 2,
+      "nature": "Medical Attention Required",
+      "patient": "siddharth",
+      "phoneNumber": "2088108585",
+      "provider": "NP. Brown",
+      "start_time": "2023-09-14 09:00",
+      "urgency": "Emergency"
+    },
+    {
+      "change_reason": "",
+      "doctors_note": "Dear Siddharth,\n\nThank you for choosing our clinic for your urgent medical needs. I understand that you require immediate medical attention.\n\nPlease ensure you arrive at least 15 minutes prior to your scheduled appointment for the necessary patient registration. In case your condition deteriorates further, kindly contact our clinic immediately.\n\nI look forward to our meeting where I will provide the necessary medical care to address your urgent situation.\n\nWarm regards,\nDr. Smith",
+      "email": "siddharthduggal2013@gmail.com",
+      "exam_room": 3,
+      "nature": "Medical Attention Required",
+      "patient": "siddharth",
+      "phoneNumber": "2088108585",
+      "provider": "Dr. Smith",
+      "start_time": "2023-09-14 12:45",
+      "urgency": "Emergency"
+    }
+  ]
+}

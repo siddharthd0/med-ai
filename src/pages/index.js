@@ -132,7 +132,7 @@ export default function Home() {
           id="problem"
           className="relative min-h-screen bg-gradient-to-r from-gray-100 via-white to-gray-100"
         >
-          <h1 className="text-4xl font-nunito font-semibold text-center pt-10 animate__animated animate__fadeInUp">
+          <h1 className="text-4xl font-semibold text-center pt-10 animate__animated animate__fadeInUp">
             The Problem
           </h1>
           <div className="flex justify-center flex-wrap items-center bg-gradient-to-r from-gray-100 via-white to-gray-100 p-8 animate__animated animate__fadeInUp">

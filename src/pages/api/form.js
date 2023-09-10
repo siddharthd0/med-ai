@@ -1,9 +1,7 @@
 import { MongoClient } from "mongodb";
 import { sendEmail } from "./confirmation";
-const accountSid =
-  process.env.TWILIO_ACCOUNT_SID || "ACc748238ca8a1f58912b6cb1d9331e8a3";
-const authToken =
-  process.env.TWILIO_AUTH_TOKEN || "824d8ba04b26bcb3d059b39a730a9d1a";
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
+const authToken = process.env.TWILIO_AUTH_TOKEN;
 const client = require("twilio")(accountSid, authToken);
 
 export default async function handler(req, res) {

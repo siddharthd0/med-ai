@@ -13,7 +13,7 @@ export async function sendEmail(to, html) {
     const info = await transporter.sendMail({
       from: '"MedSched.ai" <hr@techoptimum.org>',
       to: to,
-      subject: "Appointment Confirmation",
+      subject: "MedSched Update",
       html,
     });
   } catch (error) {}

@@ -1,232 +1,112 @@
-import { useRouter } from "next/router";
-import Cookies from "js-cookie";
-import React, { useEffect, useState } from "react";
-
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  Typography,
-  Input,
-  Checkbox,
-  Button,
-  Alert,
-} from "@material-tailwind/react";
-import Nav from "../components/navigation";
+import React, { useState } from "react";
 import Head from "next/head";
-import Lottie from "lottie-react";
+import Nav from "../components/navigation";
+import axios from "axios";
+import { Input, Button } from "@material-tailwind/react";
 
-function Icon() {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      strokeWidth={2}
-      stroke="currentColor"
-      className="h-6 w-6"
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
-      />
-    </svg>
-  );
-}
-
-export default function Login() {
-  const router = useRouter();
+const FormPage = () => {
   const [formData, setFormData] = useState({
     email: "",
-    password: "",
-    rememberMe: false,
+    name: "",
   });
-  const [bgAnimationData, setBgAnimationData] = useState(null);
-  const [showAlert, setShowAlert] = useState(false);
-  const [alertType, setAlertType] = useState("");
-  const [open, setOpen] = React.useState(true);
-  const [rememberMe, setRememberMe] = useState(false);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value, rememberMe: rememberMe });
-  };
+  const [formSubmitting, setFormSubmitting] = useState(false);
+  const [showToast, setShowToast] = useState(false);
 
-  const handleLogin = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setFormSubmitting(true);
     try {
-      const response = await fetch("/api/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-
-        body: JSON.stringify(formData),
-      });
-      const data = await response.json();
-      if (response.ok) {
-        if (formData.rememberMe) {
-          Cookies.set("rememberMe", "true", { expires: 7 }); // expires in 7 days
-        } else {
-          localStorage.setItem("sessionLogin", "true");
-        }
-        setAlertType("success");
-        setShowAlert(true);
-        setOpen(true);
-        router.push("/admindashboard");
+      const res = await axios.post("/api/login", formData);
+      if (res.status === 200 && res.data.success === true) {
+        setShowToast(true);
+        setFormSubmitting(false);
+        setFormData({ email: "" });
+        setTimeout(() => {
+          setShowToast(false);
+        }, 3000);
       } else {
-        setAlertType("error");
-        setShowAlert(true);
-        setOpen(true);
-        console.log("somethign went wrong", data);
-        // alert("something went wrong");
+        alert("An unexpected error occurred. Please try again.");
       }
     } catch (error) {
-      console.error("error loggin in: ", error);
+      console.error("Error:", error.response?.status, error.response?.data);
+      alert("An error occurred while sending the email.");
     }
   };
 
-  useEffect(() => {
-    const rememberMe = Cookies.get("rememberMe");
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
 
-    if (rememberMe === "true") {
-      router.push("/admindashboard");
-    }
-
-    fetch("/bganimation.json")
-      .then((response) => response.json())
-      .then((data) => setBgAnimationData(data));
-  }, []);
   return (
-    <>
-      <div className="text-gray-800 min-h-screen">
-        <Head>
-          <title>MedSched.ai</title>
-          <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
-          />
-          <link
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-            rel="stylesheet"
-          />
-        </Head>
+    <div className="bg-white text-gray-800 min-h-screen">
+      <Head>
+        <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+        />
+        <title>Login</title>
+      </Head> 
 
-        {/* Navbar */}
-        <Nav />
+      <Nav />
+      <div className={`toast ${showToast ? "show-toast" : ""}`}>
+        Check your email to login
+      </div>
 
-        <main className="text-center  relative">
-          {bgAnimationData && (
-            <div className="absolute inset-0 overflow-hidden h-screen w-screen">
-              <Lottie
-                animationData={bgAnimationData}
-                loop={true}
-                style={{
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  zIndex: -1,
-                  height: "100%",
-                  minWidth: "100%",
-                  height: "auto",
-                  width: "auto",
-                }}
+      <main
+        className={`p-10 space-y-10 ${formSubmitting ? "form-disabled" : ""}`}
+      >
+        <div className="text-center mt-16">
+          <h1 className="text-4xl font-semibold">
+            Login to MedSched
+          </h1>
+          <p className="text-lg mt-4">
+          Please enter your email & name and we will send you an email to login.
+          </p>
+        </div>
+
+        <div className="max-w-lg mx-auto bg-white p-8 rounded-lg shadow-md">
+          <form onSubmit={handleSubmit}>
+            <div className="mb-6">
+              <Input
+
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                label="Name"
               />
             </div>
-          )}
-          <div className="relative h-screen flex flex-col justify-center items-center">
-            {showAlert && alertType === "success" && (
-              <Alert
-                className="w-96 animate__animated animate__fadeInUp"
-                animate={{
-                  mount: { y: 0 },
-                  unmount: { y: 100 },
-                }}
-                icon={<Icon />}
-                color="green"
-                open={open}
-                onClose={() => setOpen(false)}
-              >
-                Success
-              </Alert>
-            )}
+            
+            <div className="mb-6">
+              <Input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                label="Email"
+              />
+            </div>
+            
+            <Button
+              onClick={() => setShowToast(true)}
+              fullWidth
+              color="black"
+              type="submit"
+              ripple={true}
+            >
+             Login
+            </Button>
+          </form>
+        </div>
+      </main>
 
-            {showAlert && alertType === "error" && (
-              <Alert
-                animate={{
-                  mount: { y: 0 },
-                  unmount: { y: 100 },
-                }}
-                className="w-96 animate__animated animate__fadeInUp"
-                icon={<Icon />}
-                color="red"
-                open={open}
-                onClose={() => setOpen(false)}
-              >
-                Something went wrong {":("}
-              </Alert>
-            )}
-            <div className="mb-24"></div>
-            <Card className="w-96">
-              <form onSubmit={handleLogin}>
-                <CardHeader
-                  variant="gradient"
-                  color="blue"
-                  className="mb-4 grid h-28 place-items-center"
-                >
-                  <Typography variant="h3" color="white">
-                    Sign In
-                  </Typography>
-                </CardHeader>
-                <CardBody className="flex items-start flex-col gap-4">
-                  <Input
-                    label="Email"
-                    size="lg"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                  />
-                  <Input
-                    label="Password"
-                    size="lg"
-                    type="password"
-                    name="password"
-                    value={formData.password}
-                    onChange={handleInputChange}
-                  />
-                  <div className="-ml-2.5">
-                    <Checkbox
-                      label="Remember Me"
-                      checked={rememberMe}
-                      onChange={() => {
-                        const newRememberMe = !rememberMe;
-                        setRememberMe(newRememberMe);
-                        setFormData({ ...formData, rememberMe: newRememberMe });
-                      }}
-                    />
-                  </div>
-                </CardBody>
-                <CardFooter className="pt-0">
-                  <Button
-                    type="submit"
-                    variant="gradient"
-                    color="blue"
-                    fullWidth
-                  >
-                    Sign In
-                  </Button>
-                </CardFooter>
-              </form>
-            </Card>
-          </div>
-        </main>
-
-        <footer className="bg-gradient-to-r from-blue-100 via-white to-blue-100 text-gray-800 text-center p-5 animate__animated animate__fadeInUp">
-          <p>MedSched.ai &copy; 2023. All rights reserved.</p>
-        </footer>
-      </div>
-    </>
+      <footer className="bg-white text-gray-800 text-center p-5">
+        <p>MedSched.ai &copy; 2023. All rights reserved.</p>
+      </footer>
+    </div>
   );
-}
+};
+
+export default FormPage;
