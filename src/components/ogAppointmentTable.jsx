@@ -96,7 +96,7 @@ export function AppointmentTablem() {
               </Typography>
             </div>
           </div>
-          <div className="flex flex-col items-center justify-between gap-4 md:flex-row mb-24">
+          {/* <div className="flex flex-col items-center justify-between gap-4 md:flex-row mb-24">
             <Tabs
               value="all"
               className="w-full md:w-max "
@@ -114,9 +114,10 @@ export function AppointmentTablem() {
               <Input
                 label="Search"
                 icon={<MagnifyingGlassIcon className="h-5 w-5 " />}
+                onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
-          </div>
+          </div> */}
         </CardHeader>
         <CardBody className="overflow-scroll px-0">
           <table className="mt-4 w-full min-w-max table-auto text-left">
