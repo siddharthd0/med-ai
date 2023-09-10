@@ -13,6 +13,7 @@ import Nav from "../components/navigation";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { AppointmentTable } from "@/components/appointmentTable";
+import { OGAppointmentTable } from "@/components/ogAppointmentTable";
 
 export default function admindashboard() {
   const [appointments, setAppointments] = useState([]);
@@ -81,11 +82,22 @@ export default function admindashboard() {
           <div className="relative h-full flex flex-col ">
             <div className="ml-12 mt-28">
               <main>
-                <h1>Welcome, {name ? name : "Guest"}</h1>
-                <p>Your email: {email ? email : "Not provided"}</p>
+                <h1 className="text-3xl">Welcome, {name ? name : "Guest"}</h1>
+                <p className="text-xl">Your email: {email ? email : "Not provided"}</p>
                 <h2>Total Appointments: {appointments.length}</h2>
 
-                <h3>Personnel Available</h3>
+                
+              </main>
+            </div>
+            <AppointmentTable />
+            <OGAppointmentTable />
+            <div className="absolute bottom-0 left-0 w-full">
+              <h2 className="text-3xl font-bold animate__animated animate__fadeInUp">
+                <span className="text-blue-500">MedSched.ai</span> is a patient
+                scheduling management system using AI to help doctors and
+                patients manage their appointments.
+              </h2>
+              {/* <h3>Personnel Available</h3>
                 <PieChart width={400} height={400}>
                   <Pie
                     dataKey="value"
@@ -107,17 +119,7 @@ export default function admindashboard() {
                   <YAxis />
                   <Tooltip />
                   <Bar dataKey="value" fill="#8884d8" />
-                </BarChart>
-              </main>
-            </div>
-
-            <AppointmentTable />
-            <div className="absolute bottom-0 left-0 w-full">
-              <h2 className="text-3xl font-bold animate__animated animate__fadeInUp">
-                <span className="text-blue-500">MedSched.ai</span> is a patient
-                scheduling management system using AI to help doctors and
-                patients manage their appointments.
-              </h2>
+                </BarChart> */}
             </div>
           </div>
         </main>

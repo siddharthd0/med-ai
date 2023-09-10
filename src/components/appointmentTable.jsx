@@ -51,6 +51,7 @@ const TABLE_HEAD = [
 ];
 
 export function AppointmentTable() {
+
   const [appointments, setAppointments] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [currentAppointment, setCurrentAppointment] = useState(null);
@@ -88,6 +89,30 @@ export function AppointmentTable() {
 
     fetchData();
   }, []);
+
+  const sendNotification = async (appointment) => {
+     let { email, phoneNumber, doctors_note, change_reason } = appointment; // Make sure these fields exist in your `appointment` object
+    change_reason = change_reason || "No reason provided, preferred time given";
+    console.log("Sending notification with data:", { email, phoneNumber, doctors_note, change_reason });
+    try {
+      // Make a POST request to your new API route to send the email and SMS
+      const response = await fetch('/api/ai-confirmation', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, phoneNumber, doctors_note, change_reason}),
+      });
+      
+      const data = await response.json();
+      console.log('Notification response:', data);
+
+      if (response.status !== 200) {
+        console.error('Failed to send notification:', data);
+      }
+    } catch (error) {
+      console.error('Error occurred while sending the notification:', error);
+    }
+  };
+
 
   return (
     <div className="flex justify-center items-start min-h-screen mt-20 mb-40">
@@ -277,6 +302,13 @@ export function AppointmentTable() {
                   <Typography variant="small" color="blue-gray">
                     Doctors Note: {appointment.doctors_note}
                   </Typography>
+                  <Typography variant="small" color="blue-gray">
+  Change Reason: {appointment.change_reason || "Preferred Time Available"}
+</Typography>
+
+                  <Button className="mt-8" onClick={() => sendNotification(appointment)}>
+                  Send Notification
+                </Button>
                 </CardBody>
               </Card>
             ))}
