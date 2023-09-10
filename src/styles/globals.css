@@ -53,3 +53,8 @@ body {
   pointer-events: none;
   opacity: 0.5;
 }
+
+.full-h {
+  height: 100%;
+  overflow-y: auto; 
+}

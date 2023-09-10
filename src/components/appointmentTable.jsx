@@ -42,7 +42,7 @@ const TABS = [
 const TABLE_HEAD = [
   "Patient Name",
   "Email",
-  "Nature",
+  "Doctors Note",
   "Start Time",
   "Urgency",
   "Provider",
@@ -121,15 +121,15 @@ export function AppointmentTable() {
           <div className="mb-8 flex items-center justify-between gap-8">
             <div>
               <Typography variant="h5" color="blue-gray">
-                All Appointments
+                AI Scheduled Appointments
               </Typography>
               <Typography color="gray" className="mt-1 font-normal">
-                See information about all appointments, including a filter
+                See information about all appointments scheduled by AI, including a filter
                 system to your liking.
               </Typography>
             </div>
           </div>
-          <div className="flex flex-col items-center justify-between gap-4 md:flex-row mb-10">
+          <div className="flex flex-col items-center justify-between gap-4 md:flex-row mb-24">
             <Tabs value="all" className="w-full md:w-max ">
               <TabsHeader className="bg-gradient-to-tr from-blue-500/[.25] to-cyan-400/[.25] ">
                 {TABS.map(({ label, value }) => (
@@ -177,7 +177,7 @@ export function AppointmentTable() {
                     patient,
                     email,
                     urgency,
-                    nature,
+                    doctors_note,
                     phoneNumber,
                   },
                   index
@@ -214,7 +214,7 @@ export function AppointmentTable() {
                           color="blue-gray"
                           className="font-normal"
                         >
-                          {nature}
+                          {doctors_note}
                         </Typography>
                       </td>
                       <td className={classes}>
@@ -269,52 +269,7 @@ export function AppointmentTable() {
             </tbody>
           </table>
         </CardBody>
-        <CardBody className="overflow-scroll mt-12 px-0">
-          <Typography className="pl-6" variant="h5" color="blue-gray">
-            All Appointments (Cards)
-          </Typography>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {appointments.map((appointment, index) => (
-              <Card key={index}>
-                <CardBody>
-                  <Typography variant="h5" color="blue-gray">
-                    Patient Name: {appointment.patient}
-                  </Typography>
-                  <Typography color="blue-gray" className="mt-1 ">
-                    Patient Email: {appointment.email}
-                  </Typography>
-                  <Typography variant="small" color="blue-gray">
-                    Nature: {appointment.nature}
-                  </Typography>
-                  <Typography variant="small" color="blue-gray">
-                    Start Time: {appointment.start_time} (Modified by MedSched
-                    AI)
-                  </Typography>
-                  <Typography variant="small" color="blue-gray">
-                    Urgency: {appointment.urgency}
-                  </Typography>
-                  <Typography variant="small" color="blue-gray">
-                    Exam Room: {appointment.exam_room}
-                  </Typography>
-                  <Typography variant="small" color="blue-gray">
-                    Phone: {appointment.phoneNumber}
-                  </Typography>
-                  <Typography variant="small" color="blue-gray">
-                    Doctors Note: {appointment.doctors_note}
-                  </Typography>
-                  <Typography variant="small" color="blue-gray">
-  Change Reason: {appointment.change_reason || "Preferred Time Available"}
-</Typography>
-
-                  <Button className="mt-8" onClick={() => sendNotification(appointment)}>
-                  Send Notification
-                </Button>
-                </CardBody>
-              </Card>
-            ))}
-          </div>
-        </CardBody>
-
+       
         <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
           {/* Your footer content here */}
         </CardFooter>

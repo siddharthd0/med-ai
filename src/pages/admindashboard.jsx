@@ -13,7 +13,8 @@ import Nav from "../components/navigation";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { AppointmentTable } from "@/components/appointmentTable";
-import { OGAppointmentTable } from "@/components/ogAppointmentTable";
+import { AppointmentTablem } from "@/components/ogAppointmentTable";
+import AppointmentCards from "@/components/appointmentCards";
 
 export default function admindashboard() {
   const [appointments, setAppointments] = useState([]);
@@ -41,23 +42,23 @@ export default function admindashboard() {
   if (!name || !email) {
     return (
       <>
-      <Nav />
-      <div className="min-h-screen flex items-center justify-center bg-gray-100 text-black">
-        <div className="bg-white p-8 rounded-lg shadow-md w-full sm:w-96">
-          <h2 className="text-2xl font-semibold mb-4">Access Denied</h2>
-          <p>You need to be logged in to view this page.</p>
-          <button
-            className="mt-4 w-full bg-gradient-to-r from-blue-500 to-green-400 text-white p-2 rounded hover:from-blue-600 hover:to-green-500"
-            onClick={() => router.push("/login")}
-          >
-            Login
-          </button>
+        <Nav />
+        <div className="min-h-screen flex items-center justify-center bg-gray-100 text-black">
+          <div className="bg-white p-8 rounded-lg shadow-md w-full sm:w-96">
+            <h2 className="text-2xl font-semibold mb-4">Access Denied</h2>
+            <p>You need to be logged in to view this page.</p>
+            <button
+              className="mt-4 w-full bg-gradient-to-r from-blue-500 to-green-400 text-white p-2 rounded hover:from-blue-600 hover:to-green-500"
+              onClick={() => router.push("/login")}
+            >
+              Login
+            </button>
+          </div>
         </div>
-      </div>
-      <footer className="bg-gradient-to-r from-blue-100 via-white to-blue-100 text-gray-800 text-center p-5 animate__animated animate__fadeInUp">
-        <p>MedSched.ai &copy; 2023. All rights reserved.</p>
-      </footer>
-    </>
+        <footer className="bg-gradient-to-r from-blue-100 via-white to-blue-100 text-gray-800 text-center p-5 animate__animated animate__fadeInUp">
+          <p>MedSched.ai &copy; 2023. All rights reserved.</p>
+        </footer>
+      </>
     );
   }
 
@@ -80,23 +81,30 @@ export default function admindashboard() {
 
         <main className="color-black relative">
           <div className="relative h-full flex flex-col ">
-            <div className="ml-12 mt-28">
+            <div className="ml-20 mt-40">
               <main>
-                <h1 className="text-3xl">Welcome, {name ? name : "Guest"}</h1>
-                <p className="text-xl">Your email: {email ? email : "Not provided"}</p>
-                <h2>Total Appointments: {appointments.length}</h2>
-
-                
+                <h1 className="text-5xl font-bold">
+                  Welcome, {name ? name : "Guest"}
+                </h1>
+                <p className="text-xl">
+                  <span className="font-bold">Your email:</span>{" "}
+                  {email ? email : "Not provided"}
+                </p>
+                <h2 className="text-xl">
+                  <span className="font-bold">Total Appointments:</span>{" "}
+                  <span className="italic">{appointments.length}</span>
+                </h2>
               </main>
             </div>
-            <AppointmentTable />
-            <OGAppointmentTable />
+            <div className="ml-12 flex justify-between">
+              <div className="flex-1 overflow-x-auto">
+                <AppointmentTable />
+              </div>
+              <div className="flex-1 overflow-x-auto">
+                <AppointmentTablem />
+              </div>
+            </div>
             <div className="absolute bottom-0 left-0 w-full">
-              <h2 className="text-3xl font-bold animate__animated animate__fadeInUp">
-                <span className="text-blue-500">MedSched.ai</span> is a patient
-                scheduling management system using AI to help doctors and
-                patients manage their appointments.
-              </h2>
               {/* <h3>Personnel Available</h3>
                 <PieChart width={400} height={400}>
                   <Pie
@@ -122,7 +130,13 @@ export default function admindashboard() {
                 </BarChart> */}
             </div>
           </div>
+          <AppointmentCards />
         </main>
+        <h2 className="text-2xl py-8 px-28 font-bold animate__animated animate__fadeInUp text-center">
+          <span className="text-blue-500">MedSched.ai</span> is a patient
+          scheduling management system using AI to help doctors and patients
+          manage their appointments.
+        </h2>
         <footer className="bg-gradient-to-r from-blue-100 via-white to-blue-100 text-gray-800 text-center p-5 animate__animated animate__fadeInUp">
           <p>MedSched.ai &copy; 2023. All rights reserved.</p>
         </footer>

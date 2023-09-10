@@ -10,7 +10,7 @@ export default async function handler(req, res) {
     return res.status(405).end();
   }
 
-  let { email, phoneNumber, doctors_note, change_reason } = req.body;
+  let { email, phoneNumber, doctors_note, change_reason, start_time } = req.body;
   change_reason = change_reason || "No reason provided, preferred time given";
 
   if (!email || !phoneNumber || !doctors_note ) {
@@ -18,10 +18,12 @@ export default async function handler(req, res) {
   }
 
   try {
-    // Code to send Email
+    const appointmentDate = new Date(start_time);
+    const userFriendlyDate = `${appointmentDate.toLocaleDateString()} at ${appointmentDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+
     const emailHtml = `
       <div>
-        <p>Your appointment time has been changed.</p>
+        <p>Your appointment time has been changed to ${userFriendlyDate}</p>
         <p>Reason: ${change_reason}</p>
         <p>Doctor's Note: ${doctors_note}</p>
       </div>
@@ -30,7 +32,7 @@ export default async function handler(req, res) {
     await sendEmail(email, emailHtml);
     
     // Code to send SMS via Twilio
-    const smsText = `Your appointment time has been confirmed.\n\nReason why was time was changed: ${change_reason}. \n\nDoctor's Note: ${doctors_note}`;
+    const smsText = `Your appointment time has been confirmed for ${userFriendlyDate}.\n\nReason why was time was changed: ${change_reason}. \n\nDoctor's Note: ${doctors_note}`;
     await client.messages.create({
         body: smsText,
         from: '+18449412421', // replace with your Twilio number

@@ -45,17 +45,41 @@ const TABLE_HEAD = [
   "Phone Number",
 ];
 
-export function OGAppointmentTable() {
+export function AppointmentTablem() {
   const [appointments, setAppointments] = useState([]);
+  const [filteredAppointments, setFilteredAppointments] = useState([]);
+  const [currentTab, setCurrentTab] = useState("all");
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     async function fetchData() {
       const response = await fetch("/api/get-appointments");
       const data = await response.json();
-      setAppointments(data.appointments);
+      setAppointments(data);
     }
     fetchData();
   }, []);
+
+  useEffect(() => {
+    let filtered = [...appointments];
+
+    if (currentTab === "urgency") {
+      // Replace this logic with your actual urgency comparison
+      filtered.sort((a, b) => b.urgency - a.urgency);
+    } else if (currentTab === "time") {
+      filtered.sort(
+        (a, b) => new Date(b.preferredTime) - new Date(a.preferredTime)
+      );
+    }
+
+    if (searchTerm) {
+      filtered = filtered.filter((appointment) =>
+        appointment.patientName.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+
+    setFilteredAppointments(filtered);
+  }, [appointments, currentTab, searchTerm]);
 
   return (
     <div className="flex justify-center items-start min-h-screen mt-20 mb-40">
@@ -64,7 +88,7 @@ export function OGAppointmentTable() {
           <div className="mb-8 flex items-center justify-between gap-8">
             <div>
               <Typography variant="h5" color="blue-gray">
-                All Appointments
+                All Appointment Requests
               </Typography>
               <Typography color="gray" className="mt-1 font-normal">
                 See information about all appointments, including a filter
@@ -72,8 +96,12 @@ export function OGAppointmentTable() {
               </Typography>
             </div>
           </div>
-          <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-            <Tabs value="all" className="w-full md:w-max ">
+          <div className="flex flex-col items-center justify-between gap-4 md:flex-row mb-24">
+            <Tabs
+              value="all"
+              className="w-full md:w-max "
+              onChange={(e, val) => setCurrentTab(val)}
+            >
               <TabsHeader className="bg-gradient-to-tr from-blue-500/[.25] to-cyan-400/[.25] ">
                 {TABS.map(({ label, value }) => (
                   <Tab key={value} value={value}>
