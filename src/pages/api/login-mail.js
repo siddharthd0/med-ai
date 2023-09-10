@@ -21,7 +21,7 @@ export async function sendLoginLink(email) {
   const html = `
     <div>
       Click this link to login: 
-      <a href="http://localhost:3000/admindashboard?token=${randomString}">
+      <a href="https://medsched.vercel.app/admindashboard?token=${randomString}">
         Login
       </a>
     </div>

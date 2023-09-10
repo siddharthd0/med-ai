@@ -12,7 +12,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const loginUrl = `http://localhost:3000/admindashboard?email=${encodeURIComponent(
+    const loginUrl = `https://medsched.vercel.app/admindashboard?email=${encodeURIComponent(
       email
     )}&name=${encodeURIComponent(name)}`;
 
