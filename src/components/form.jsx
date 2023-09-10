@@ -1,35 +1,52 @@
-import React, { useState } from 'react';
-import Head from 'next/head';
-import Nav from '../components/navigation';  
-import axios from 'axios';
-import { Input, Button, Textarea, Select, Option } from '@material-tailwind/react';
+import React, { useState } from "react";
+import Head from "next/head";
+import Nav from "../components/navigation";
+import axios from "axios";
+import {
+  Input,
+  Button,
+  Textarea,
+  Select,
+  Option,
+} from "@material-tailwind/react";
 
 const FormPage = () => {
   const [formData, setFormData] = useState({
-    patientName: '',
-    email: '',
-    preferredDate: '',
-    preferredTime: '',
-    consultationType: '',
-    doctorPreference: '',
-    reason: ''
+    patientName: "",
+    email: "",
+    preferredDate: "",
+    preferredTime: "",
+    consultationType: "",
+    doctorPreference: "",
+    reason: "",
   });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    console.log("formData before sending:", formData);
+
     try {
-      const res = await axios.post('/api/form', formData);
-      if (res.status === 201) {
-        alert('Appointment scheduled successfully!');
+      console.log("Sending form data:", formData);
+      // Updated API route to newForm
+      const res = await axios.post("/api/form", formData);
+
+      if (res.status === 201 && res.data.success === true) {
+        alert("Appointment scheduled successfully!");
+      } else {
+        alert("An unexpected error occurred. Please try again.");
       }
     } catch (error) {
-      alert('An error occurred while scheduling the appointment.');
+      console.error("Error:", error.response?.status, error.response?.data);
+      alert("An error occurred while scheduling the appointment.");
     }
   };
 
   const handleChange = (e) => {
+    console.log(e); // log the entire event object
+    if (!e.target) return;
     const { name, value } = e.target;
+    console.log(`Changing ${name} to ${value}`);
     setFormData({ ...formData, [name]: value });
   };
 
@@ -39,18 +56,19 @@ const FormPage = () => {
         <title>Patient Scheduling Form</title>
       </Head>
 
-      {/* Navbar */}
       <Nav />
 
       <main className="p-10 space-y-10">
         <div className="text-center mt-16">
-          <h1 className="text-4xl font-semibold">Patient Scheduling Submission Form</h1>
+          <h1 className="text-4xl font-semibold">
+            Patient Scheduling Submission Form
+          </h1>
         </div>
 
         <div className="max-w-lg mx-auto bg-white p-8 rounded-lg shadow-md">
           <form onSubmit={handleSubmit}>
             <div className="mb-6">
-              <Input 
+              <Input
                 type="text"
                 name="patientName"
                 value={formData.patientName}
@@ -60,7 +78,7 @@ const FormPage = () => {
             </div>
 
             <div className="mb-6">
-              <Input 
+              <Input
                 type="email"
                 name="email"
                 value={formData.email}
@@ -70,7 +88,7 @@ const FormPage = () => {
             </div>
 
             <div className="mb-6">
-              <Input 
+              <Input
                 type="date"
                 name="preferredDate"
                 value={formData.preferredDate}
@@ -80,8 +98,8 @@ const FormPage = () => {
             </div>
 
             <div className="mb-6">
-              <Input 
-                type="time"
+              <Input
+                type="text"
                 name="preferredTime"
                 value={formData.preferredTime}
                 onChange={handleChange}
@@ -90,21 +108,17 @@ const FormPage = () => {
             </div>
 
             <div className="mb-6">
-              <Select 
+              <Input
+                type="text"
                 name="consultationType"
                 value={formData.consultationType}
                 onChange={handleChange}
                 label="Type of Consultation"
-              >
-                <Option value="General Consultation">General Consultation</Option>
-                <Option value="Specialist Consultation">Specialist Consultation</Option>
-                <Option value="Follow-up Consultation">Follow-up Consultation</Option>
-                <Option color="red" value="Emergency">Emergency</Option>
-              </Select>
+              />
             </div>
 
             <div className="mb-6">
-              <Input 
+              <Input
                 type="text"
                 name="doctorPreference"
                 value={formData.doctorPreference}
@@ -114,7 +128,7 @@ const FormPage = () => {
             </div>
 
             <div className="mb-6">
-              <Textarea 
+              <Textarea
                 name="reason"
                 value={formData.reason}
                 onChange={handleChange}
@@ -123,7 +137,7 @@ const FormPage = () => {
               />
             </div>
 
-            <Button fullWidth color="black" type="submit" ripple="light">
+            <Button fullWidth color="black" type="submit" ripple={true}>
               Schedule Appointment
             </Button>
           </form>
