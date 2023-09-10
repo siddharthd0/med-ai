@@ -45,7 +45,7 @@ export function AppointmentTable() {
     async function fetchData() {
       const response = await fetch("/api/get-appointments"); 
       const data = await response.json();
-      setAppointments(data);
+      setAppointments(data.appointments);
     }
     fetchData();
   }, []);
