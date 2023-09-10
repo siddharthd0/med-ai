@@ -63,7 +63,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="text-gray-800 min-h-screen">
+    <div className="text-gray-800 min-h-screen scroll-smooth">
       <Head>
         <title>MedSched.ai</title>
         <link
@@ -79,7 +79,7 @@ export default function Home() {
       {/* Navbar */}
       <Nav />
 
-      <main className="text-center  relative">
+      <main className="text-center  relative scroll-smooth">
         {/*{bgAnimationData && (
           <div className="absolute inset-0 overflow-hidden h-screen w-screen">
             <Lottie

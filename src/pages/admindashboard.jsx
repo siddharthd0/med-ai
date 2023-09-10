@@ -1,32 +1,35 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { PieChart, Pie, Tooltip, BarChart, Bar, XAxis, YAxis, CartesianGrid } from "recharts";
 import Nav from "../components/navigation";
 import Head from "next/head";
-import Lottie from "lottie-react";
-import Cookies from "js-cookie";
-import { useEffect, useState } from "react";
-import { AppointmentTable } from "@/components/appointmentTable";
 import { useRouter } from "next/router";
+import { AppointmentTable } from "@/components/appointmentTable";
 
 export default function admindashboard() {
-  const [bgAnimationData, setBgAnimationData] = useState(null);
-  const [userData, setUserData] = useState(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [appointments, setAppointments] = useState([]);
   const router = useRouter();
-
-  // Extract email and name from query params
   const { email, name } = router.query;
+  const [doctors, setDoctors] = useState(3);
+  const [nurses, setNurses] = useState(9);
+  const appointmentHours = (appointments.length * 40) / 60;
 
   useEffect(() => {
-    // Log router.query to the console for debugging
-    console.log("router.query: ", router.query);
+    async function fetchData() {
+      const response = await fetch("/api/get-appointments");
+      const data = await response.json();
+      setAppointments(data);
+    }
+    fetchData();
+  }, [setAppointments]);
 
-    // Destructure email and name from router.query
-    const { email, name } = router.query;
+  const pieData = [
+    { name: 'Doctors', value: 5},
+    { name: 'Nurses', value: 3 },
+  ];
 
-    // Use email and name as needed
-    console.log(`Email: ${email}, Name: ${name}`);
-  }, [router.query]);
-  console.log(router.query);
+  const barData = [
+    { name: 'Appointment Hours', value: appointmentHours },
+  ];
 
   return (
     <>
@@ -43,15 +46,32 @@ export default function admindashboard() {
           />
         </Head>
 
-        {/* Navbar */}
+
         <Nav />
 
         <main className="color-black relative">
           <div className="relative h-full flex flex-col ">
             <div className="ml-12 mt-28">
-              <h1 className="text-3xl"> Welcome, {name ? name : "Guest"}</h1>
-              <p>Your email: {email ? email : "Not provided"}</p>
-              {/* Display email and name */}
+            <main>
+          <h1>Welcome, {name ? name : "Guest"}</h1>
+          <p>Your email: {email ? email : "Not provided"}</p>
+          <h2>Total Appointments: {appointments.length}</h2>
+          
+          <h3>Personnel Available</h3>
+          <PieChart width={400} height={400}>
+            <Pie dataKey="value" isAnimationActive={false} data={pieData} cx={200} cy={200} outerRadius={80} fill="#8884d8" label />
+            <Tooltip />
+          </PieChart>
+
+          <h3>Appointment Hours</h3>
+          <BarChart width={300} height={300} data={barData}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="name" />
+            <YAxis />
+            <Tooltip />
+            <Bar dataKey="value" fill="#8884d8" />
+          </BarChart>
+        </main>
             </div>
   
             <AppointmentTable />
