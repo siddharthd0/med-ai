@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-
+import Cookies from "js-cookie";
 import React, { useEffect, useState } from "react";
 
 import {
@@ -38,15 +38,20 @@ function Icon() {
 
 export default function Login() {
   const router = useRouter();
-  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+    rememberMe: false,
+  });
   const [bgAnimationData, setBgAnimationData] = useState(null);
   const [showAlert, setShowAlert] = useState(false);
   const [alertType, setAlertType] = useState("");
   const [open, setOpen] = React.useState(true);
+  const [rememberMe, setRememberMe] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData({ ...formData, [name]: value, rememberMe: rememberMe });
   };
 
   const handleLogin = async (e) => {
@@ -62,6 +67,11 @@ export default function Login() {
       });
       const data = await response.json();
       if (response.ok) {
+        if (formData.rememberMe) {
+          Cookies.set("rememberMe", "true", { expires: 7 }); // expires in 7 days
+        } else {
+          localStorage.setItem("sessionLogin", "true");
+        }
         setAlertType("success");
         setShowAlert(true);
         setOpen(true);
@@ -79,6 +89,12 @@ export default function Login() {
   };
 
   useEffect(() => {
+    const rememberMe = Cookies.get("rememberMe");
+
+    if (rememberMe === "true") {
+      router.push("/admindashboard");
+    }
+
     fetch("/bganimation.json")
       .then((response) => response.json())
       .then((data) => setBgAnimationData(data));
@@ -181,7 +197,15 @@ export default function Login() {
                     onChange={handleInputChange}
                   />
                   <div className="-ml-2.5">
-                    <Checkbox label="Remember Me" />
+                    <Checkbox
+                      label="Remember Me"
+                      checked={rememberMe}
+                      onChange={() => {
+                        const newRememberMe = !rememberMe;
+                        setRememberMe(newRememberMe);
+                        setFormData({ ...formData, rememberMe: newRememberMe });
+                      }}
+                    />
                   </div>
                 </CardBody>
                 <CardFooter className="pt-0">
