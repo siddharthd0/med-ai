@@ -1,50 +1,43 @@
 import { MongoClient } from "mongodb";
 import { sendEmail } from "./confirmation";
+const accountSid =
+  process.env.TWILIO_ACCOUNT_SID || "ACc748238ca8a1f58912b6cb1d9331e8a3";
+const authToken =
+  process.env.TWILIO_AUTH_TOKEN || "824d8ba04b26bcb3d059b39a730a9d1a";
+const client = require("twilio")(accountSid, authToken);
+
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).end();
   }
 
-  const {
-    patientName,
-    email,
-
-    preferredTime,
-
-    nature,
-
-    reason,
-  } = req.body;
+  const { patientName, email, preferredTime, nature, reason, phoneNumber } =
+    req.body;
 
   if (!patientName || !email || !preferredTime || !nature || !reason) {
     return res.status(400).json({ error: "All fields are required." });
   }
 
-  // Connection URL and Database Name
   const url = process.env.MONGODB;
   const dbName = "medsched";
 
   try {
-    const client = new MongoClient(url, {
+    const mongoClient = new MongoClient(url, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
-    await client.connect();
+    await mongoClient.connect();
 
-    console.log("Connected to database");
-    console.log("Received req.body: ", req.body);
-
-    const db = client.db(dbName);
+    const db = mongoClient.db(dbName);
     const collection = db.collection("appointments");
 
     const result = await collection.insertOne({
       patientName,
       email,
       nature,
-
       preferredTime,
-
       reason,
+      phoneNumber,
       createdAt: new Date(),
     });
 
@@ -68,14 +61,23 @@ export default async function handler(req, res) {
     </div>
   `;
 
-    // Now you can use this HTML in your sendEmail function
-
     await sendEmail(email, emailHtml);
+    client.messages
+      .create({
+        body: `Hey ${patientName}, your appointment is booked for ${preferredTime} but is subject to change due to our AI rescheduling appointments to fit patients on a needs-basis.`,
+        from: "+18449412421",
+        to: phoneNumber,
+      })
+      .then((message) => console.log(message.sid))
+      .catch((error) => console.error(error));
+
+    res.status(201).json({ success: true });
 
     res.status(201).json({ success: true });
   } catch (error) {
     console.error("Error occurred:", error);
     console.log("Received req.body: ", req.body);
+    console.error("Error occurred:", error);
 
     res
       .status(500)

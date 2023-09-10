@@ -21,20 +21,31 @@ const FormPage = () => {
     preferredTime: "",
     nature: "",
     reason: "",
+    phoneNumber: "",
   });
+
+  const [formSubmitting, setFormSubmitting] = useState(false);
+  const [showToast, setShowToast] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    console.log("formData before sending:", formData);
-
+    setFormSubmitting(true);
     try {
-      console.log("Sending form data:", formData);
-      // Updated API route to newForm
       const res = await axios.post("/api/form", formData);
-
       if (res.status === 201 && res.data.success === true) {
-        alert("Appointment scheduled successfully!");
+        setShowToast(true);
+        setFormSubmitting(false);
+        setFormData({
+          patientName: "",
+          email: "",
+          preferredTime: "",
+          nature: "",
+          reason: "",
+          phoneNumber: "",
+        });
+        setTimeout(() => {
+          setShowToast(false);
+        }, 3000);
       } else {
         alert("An unexpected error occurred. Please try again.");
       }
@@ -45,10 +56,7 @@ const FormPage = () => {
   };
 
   const handleChange = (e) => {
-    console.log(e); // log the entire event object
-    if (!e.target) return;
     const { name, value } = e.target;
-    console.log(`Changing ${name} to ${value}`);
     setFormData({ ...formData, [name]: value });
   };
 
@@ -64,12 +72,22 @@ const FormPage = () => {
       </Head>
 
       <Nav />
+      <div className={`toast ${showToast ? "show-toast" : ""}`}>
+        Appointment scheduled successfully!
+      </div>
 
-      <main className="p-10 space-y-10">
+      <main
+        className={`p-10 space-y-10 ${formSubmitting ? "form-disabled" : ""}`}
+      >
         <div className="text-center mt-16">
           <h1 className="text-4xl font-semibold">
             Patient Scheduling Submission Form
           </h1>
+          <p className="text-lg mt-4">
+            Please fill out the form below to schedule an appointment. <br />
+            Our AI will process your request and send a follow-up confirmation
+            email within 24 hours.
+          </p>
         </div>
 
         <div className="max-w-lg mx-auto bg-white p-8 rounded-lg shadow-md">
@@ -91,6 +109,15 @@ const FormPage = () => {
                 value={formData.email}
                 onChange={handleChange}
                 label="Email"
+              />
+            </div>
+            <div className="mb-6">
+              <Input
+                type="text"
+                name="phoneNumber"
+                value={formData.phoneNumber}
+                onChange={handleChange}
+                label="Phone Number"
               />
             </div>
 
@@ -149,7 +176,13 @@ const FormPage = () => {
               />
             </div>
 
-            <Button fullWidth color="black" type="submit" ripple={true}>
+            <Button
+              onClick={() => setShowToast(true)}
+              fullWidth
+              color="black"
+              type="submit"
+              ripple={true}
+            >
               Schedule Appointment
             </Button>
           </form>

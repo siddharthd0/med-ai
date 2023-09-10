@@ -3,18 +3,24 @@ import Nav from "../components/navigation";
 import Head from "next/head";
 import Lottie from "lottie-react";
 import { useEffect, useState } from "react";
+import { AppointmentTable } from "@/components/appointmentTable";
 
 export default function admindashboard() {
   const [bgAnimationData, setBgAnimationData] = useState(null);
+  const [userData, setUserData] = useState(null);
 
   useEffect(() => {
     fetch("/bganimation.json")
       .then((response) => response.json())
       .then((data) => setBgAnimationData(data));
+
+    fetch("/api/getUserData")
+      .then((response) => response.json())
+      .then((data) => setUserData(data));
   }, []);
   return (
     <>
-      <div className="text-gray-800 min-h-screen">
+      <div className="text-gray-800 min-h-screen bg-white">
         <Head>
           <title>MedSched.ai</title>
           <link
@@ -30,30 +36,20 @@ export default function admindashboard() {
         {/* Navbar */}
         <Nav />
 
-        <main className="text-center  relative">
-          {bgAnimationData && (
-            <div className="absolute inset-0 overflow-hidden h-screen w-screen">
-              <Lottie
-                animationData={bgAnimationData}
-                loop={true}
-                style={{
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  zIndex: -1,
-                  height: "100%",
-                  minWidth: "100%",
-                  height: "auto",
-                  width: "auto",
-                }}
-              />
-            </div>
-          )}
-          <div className="relative h-screen flex flex-col justify-center items-center">
+        <main className=" relative">
+          <div className="relative h-screen flex flex-col ">
             <div>
-              <h1 className="text-5xl font-bold animate__animated animate__fadeInUp">
-                Welcome, Admin!
+              <h1 className="ml-10 mt-40 text-5xl font-bold animate__animated animate__fadeInUp animate__delay-1s">
+                {userData ? `Welcome, ${userData.name} :)` : "Loading..."}
               </h1>
+            </div>
+            <AppointmentTable />
+            <div className="absolute bottom-0 left-0 w-full">
+              <h2 className="text-3xl font-bold animate__animated animate__fadeInUp">
+                <span className="text-blue-500">MedSched.ai</span> is a patient
+                scheduling management system using AI to help doctors and
+                patients manage their appointments.
+              </h2>
             </div>
           </div>
         </main>

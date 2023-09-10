@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import Link from "next/link";
 
 const Navbar = () => {
   return (
@@ -12,18 +12,18 @@ const Navbar = () => {
         <div>
           <ul className="flex space-x-6">
             <li className="transition-all duration-300 ease-in-out transform hover:scale-105 hover:text-blue-500">
-              <Link legacyBehavior href="/features">
-                <a>Features</a>
+              <Link legacyBehavior href="#problem">
+                <a>The Problem</a>
               </Link>
             </li>
             <li className="transition-all duration-300 ease-in-out transform hover:scale-105 hover:text-blue-500">
-              <Link legacyBehavior href="/about">
-                <a>About</a>
+              <Link legacyBehavior href="#solution">
+                <a>Our Solution</a>
               </Link>
             </li>
             <li className="transition-all duration-300 ease-in-out transform hover:scale-105 hover:text-blue-500">
-              <Link legacyBehavior href="/contact">
-                <a>Contact</a>
+              <Link legacyBehavior href="/team">
+                <a>Mission & Team</a>
               </Link>
             </li>
           </ul>
