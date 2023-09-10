@@ -1,6 +1,4 @@
-import Form from "../components/form"
+import FormPage from "@/components/form";
 export default function Home() {
-    return (
-        <Form/>
-    )
+  return <FormPage />;
 }

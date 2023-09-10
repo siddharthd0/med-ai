@@ -8,16 +8,18 @@ import {
   Textarea,
   Select,
   Option,
+  PopoverHandler,
+  PopoverContent,
+  IconButton,
+  Popover,
 } from "@material-tailwind/react";
 
 const FormPage = () => {
   const [formData, setFormData] = useState({
     patientName: "",
     email: "",
-    preferredDate: "",
     preferredTime: "",
-    consultationType: "",
-    doctorPreference: "",
+    nature: "",
     reason: "",
   });
 
@@ -53,6 +55,11 @@ const FormPage = () => {
   return (
     <div className="bg-white text-gray-800 min-h-screen">
       <Head>
+        <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+        />
+
         <title>Patient Scheduling Form</title>
       </Head>
 
@@ -89,16 +96,6 @@ const FormPage = () => {
 
             <div className="mb-6">
               <Input
-                type="date"
-                name="preferredDate"
-                value={formData.preferredDate}
-                onChange={handleChange}
-                label="Preferred Date of Appointment"
-              />
-            </div>
-
-            <div className="mb-6">
-              <Input
                 type="text"
                 name="preferredTime"
                 value={formData.preferredTime}
@@ -106,28 +103,43 @@ const FormPage = () => {
                 label="Preferred Time of Appointment"
               />
             </div>
-
-            <div className="mb-6">
+            <div className="flex items-center">
               <Input
                 type="text"
-                name="consultationType"
-                value={formData.consultationType}
+                name="nature"
+                value={formData.nature}
                 onChange={handleChange}
-                label="Type of Consultation"
+                label="Nature of Appointment"
               />
+              <Popover placement="top" trigger="hover">
+                <PopoverHandler>
+                  <IconButton
+                    className="ml-2"
+                    color="lightBlue"
+                    buttonType="filled"
+                    iconOnly={true}
+                    rounded={true}
+                    ripple="dark"
+                  >
+                    <i className="fas fa-info-circle"></i>
+                  </IconButton>
+                </PopoverHandler>
+                <PopoverContent color="white" style={{ padding: "1rem" }}>
+                  <ul>
+                    <li>- Routine Check-up</li>
+                    <li>- Follow-up</li>
+                    <li>- Specialist Consultation</li>
+                    <li>- Diagnostic Test</li>
+                    <li>- Postoperative</li>
+                    <li>- Emergency</li>
+                    <li>- Vaccination</li>
+                    <li>- Mental Health</li>
+                  </ul>
+                </PopoverContent>
+              </Popover>
             </div>
 
-            <div className="mb-6">
-              <Input
-                type="text"
-                name="doctorPreference"
-                value={formData.doctorPreference}
-                onChange={handleChange}
-                label="Doctor or Nurse Preference"
-              />
-            </div>
-
-            <div className="mb-6">
+            <div className="mt-6 mb-6">
               <Textarea
                 name="reason"
                 value={formData.reason}

@@ -51,61 +51,12 @@ export default function admindashboard() {
           )}
           <div className="relative h-screen flex flex-col justify-center items-center">
             <div>
-              <h1 className="text-4xl font-nunito font-semibold mb-5 animate__animated animate__fadeIn">
-                Automating Patient Scheduling Like Never Before
+              <h1 className="text-5xl font-bold animate__animated animate__fadeInUp">
+                Welcome, Admin!
               </h1>
-              <p className="mb-10 font-nunito animate__animated animate__fadeInUp">
-                MedSched.ai uses advanced algorithms to schedule and sort
-                patient appointments.
-              </p>
-
-              <div className="flex justify-center items-center mb-10 space-x-4 animate__animated animate__bounceIn">
-                <button className="text-blue-500 border-2 border-blue-500 rounded-full px-6 py-2 flex items-center transition-all duration-300 ease-in-out hover:bg-blue-500 hover:text-white">
-                  <i className="fas fa-calendar-alt mr-2"></i>
-                  <span font-nunito>Schedule Appointment</span>
-                </button>
-                <a href="/admindashboard">
-                  <button className="font-nunito text-green-500 border-2 border-green-500 rounded-full px-6 py-2 flex items-center transition-all duration-300 ease-in-out hover:bg-green-500 hover:text-white">
-                    <i className="fas fa-tachometer-alt mr-2"></i>
-                    View Admin Dashboard
-                  </button>
-                </a>
-              </div>
             </div>
           </div>
-
-          <div className="relative min-h-screen bg-gradient-to-r from-blue-100 via-white to-blue-100">
-            <div className="bg-gradient-to-r from-blue-100 via-white to-blue-100 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 p-8 animate__animated animate__fadeInUp h-screen">
-              {/* Increased height with h-80 */}
-              <div className="font-nunito border rounded p-4 hover:shadow-lg transition duration-200">
-                <h3 className="font-nunito text-xl font-semibold">
-                  Smart Sorting
-                </h3>
-                <p>
-                  Our AI categorizes appointments based on urgency and need,
-                  ensuring critical cases get immediate attention.
-                </p>
-              </div>
-              <div className="font-nunito border rounded p-4 hover:shadow-lg transition duration-200">
-                <h3 className="text-xl font-semibold  font-nunito">
-                  Seamless Integration
-                </h3>
-                <p>
-                  Easily integrate MedSched.ai with your existing EHR systems in
-                  a snap.
-                </p>
-              </div>
-              <div className="font-nunito border rounded p-4 hover:shadow-lg transition duration-200">
-                <h3 className="text-xl font-semibold">Real-Time Updates</h3>
-                <p>
-                  Get real-time updates on your schedule, including
-                  cancellations and newly available slots.
-                </p>
-              </div>
-            </div>{" "}
-          </div>
         </main>
-
         <footer className="bg-gradient-to-r from-blue-100 via-white to-blue-100 text-gray-800 text-center p-5 animate__animated animate__fadeInUp">
           <p>MedSched.ai &copy; 2023. All rights reserved.</p>
         </footer>

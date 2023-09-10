@@ -3,10 +3,35 @@ import Head from "next/head";
 import Nav from "../components/navigation";
 import Lottie from "lottie-react";
 import { useEffect, useState } from "react";
-import { Button } from "@material-tailwind/react";
-export default function Home() {
-  const [bgAnimationData, setBgAnimationData] = useState(null);
+import { Button, Card, CardBody } from "@material-tailwind/react";
 
+export default function Home() {
+  const [currentProblemIndex, setCurrentProblemIndex] = useState(0);
+  const problems = [
+    {
+      title: "Inefficient Scheduling",
+      description: "Traditional methods often lead to overlaps and delays.",
+    },
+    {
+      title: "Resource Wastage",
+      description:
+        "Incorrect scheduling can result in wasted healthcare resources.",
+    },
+    {
+      title: "Patient Dissatisfaction",
+      description: "Complex scheduling processes can lead to unhappy patients.",
+    },
+  ];
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentProblemIndex((prevIndex) => (prevIndex + 1) % problems.length);
+    }, 3000); // Change card every 3 seconds
+
+    return () => clearInterval(timer); // Cleanup timer
+  }, []);
+
+  const [bgAnimationData, setBgAnimationData] = useState(null);
   useEffect(() => {
     fetch("/bganimation.json")
       .then((response) => response.json())
@@ -31,7 +56,7 @@ export default function Home() {
       <Nav />
 
       <main className="text-center  relative">
-        {bgAnimationData && (
+        {/*{bgAnimationData && (
           <div className="absolute inset-0 overflow-hidden h-screen w-screen">
             <Lottie
               animationData={bgAnimationData}
@@ -48,8 +73,8 @@ export default function Home() {
               }}
             />
           </div>
-        )}
-        <div className="relative h-screen flex flex-col justify-center items-center">
+        )}*/}
+        <div className="relative h-screen flex flex-col justify-center items-center bg-white">
           <div>
             <h1 className="text-4xl font-nunito font-semibold mb-5 animate__animated animate__fadeIn">
               Automating Patient Scheduling Like Never Before
@@ -75,6 +100,20 @@ export default function Home() {
                 <a href="/login">View Admin Dashboard</a>
               </Button>
             </div>
+          </div>
+        </div>
+        <div className="relative min-h-screen bg-gradient-to-r from-gray-100 via-white to-gray-100">
+          <div className="flex justify-center items-center h-full animate__animated animate__fadeInUp">
+            <Card>
+              <CardBody>
+                <h2 className="text-3xl font-bold mb-4">
+                  {problems[currentProblemIndex].title}
+                </h2>
+                <p className="text-lg">
+                  {problems[currentProblemIndex].description}
+                </p>
+              </CardBody>
+            </Card>
           </div>
         </div>
 
