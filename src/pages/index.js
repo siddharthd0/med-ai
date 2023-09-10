@@ -151,7 +151,7 @@ export default function Home() {
           </div>
           <h2
             id="solution"
-            className="text-4xl font-semibold mb-5 animate__animated animate__fadeIn"
+            className="pt-24 text-4xl font-semibold mb-5 animate__animated animate__fadeIn"
           >
             The Solution
           </h2>

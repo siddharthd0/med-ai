@@ -43,9 +43,12 @@ export function AppointmentTable() {
 
   useEffect(() => {
     async function fetchData() {
-      const response = await fetch("/api/get-appointments"); 
+      const response = await fetch("/api/getAiAppointments"); 
       const data = await response.json();
-      setAppointments(data.appointments);
+      console.log("Recieved Data: ", data);
+      const fetchedAppointments = data.generated_schedule.objects;
+      console.log("Fetched Appointments: ", fetchedAppointments);
+      setAppointments(fetchedAppointments);
     }
     fetchData();
   }, []);
@@ -107,14 +110,14 @@ export function AppointmentTable() {
               {appointments.map(
                 (
                   {
-                    _id,
-                    patientName,
+                    start_time,
+                    exam_room,
+                    provider,
+                    patient,
                     email,
+                    urgency,
                     nature,
-                    preferredTime,
-                    reason,
                     phoneNumber,
-                    createdAt,
                   },
                   index
                 ) => {
@@ -123,7 +126,7 @@ export function AppointmentTable() {
                       ? "p-4"
                       : "p-4 border-b border-blue-gray-50";
                   return (
-                    <tr key={_id}>
+                    <tr key={index}>
                       <td className={classes}>
                         <div className="flex flex-col">
                           <Typography
@@ -131,7 +134,7 @@ export function AppointmentTable() {
                             color="blue-gray"
                             className="font-normal"
                           >
-                            {patientName}
+                            {patient}
                           </Typography>
                           
                         </div>
@@ -160,7 +163,7 @@ export function AppointmentTable() {
                           color="blue-gray"
                           className="font-normal"
                         >
-                      {preferredTime}
+                      {start_time}
                         </Typography>
                       </td>
                       <td className={classes}>
@@ -169,7 +172,25 @@ export function AppointmentTable() {
                           color="blue-gray"
                           className="font-normal"
                         >
-                          {reason}
+                          {urgency}
+                        </Typography>
+                      </td>
+                      <td className={classes}>
+                        <Typography
+                          variant="small"
+                          color="blue-gray"
+                          className="font-normal"
+                        >
+                          {provider}
+                        </Typography>
+                      </td>
+                      <td className={classes}>
+                        <Typography
+                          variant="small"
+                          color="blue-gray"
+                          className="font-normal"
+                        >
+                          {exam_room}
                         </Typography>
                       </td>
                       <td className={classes}>

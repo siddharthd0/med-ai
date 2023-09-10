@@ -12,10 +12,11 @@ export default async function handler(req, res) {
   const db = client.db('medsched'); // Database name
 
   try {
-    const appointmentsCollection = db.collection('appointments'); // Collection name
+    const appointmentsCollection = db.collection('latestschedule'); // Collection name
     const appointments = await appointmentsCollection.find({}).toArray();
 
     res.status(200).json(appointments);
+    console.log('Appointments fetched.', appointments);
   } catch (error) {
     console.error('Error fetching appointments:', error);
     res.status(500).json({ message: 'Internal Server Error' });
