@@ -8,7 +8,10 @@ import {
   CardHeader,
   Input,
   Typography,
+  Text,
   Button,
+  Badge,
+  Modal,
   CardBody,
   Chip,
   CardFooter,
@@ -36,20 +39,53 @@ const TABS = [
   },
 ];
 
-const TABLE_HEAD = ["Patient Name", "Email", "Nature", "Preferred Time", "Reason", "Phone Number"];
+const TABLE_HEAD = [
+  "Patient Name",
+  "Email",
+  "Nature",
+  "Start Time",
+  "Urgency",
+  "Provider",
+  "Exam Room",
+  "Phone Number",
+];
 
 export function AppointmentTable() {
   const [appointments, setAppointments] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [currentAppointment, setCurrentAppointment] = useState(null);
+  useEffect(() => {
+    async function fetchData() {
+      const response = await fetch("/api/getAiAppointment");
+      const data = await response.json();
+      const fetchedAppointments =
+        data.length > 0 ? data[0].generated_schedule : [];
+      setAppointments(fetchedAppointments);
+    }
+    fetchData();
+  }, []);
 
   useEffect(() => {
     async function fetchData() {
-      const response = await fetch("/api/getAiAppointments"); 
+      const response = await fetch("/api/getAiAppointment");
       const data = await response.json();
-      console.log("Recieved Data: ", data);
-      const fetchedAppointments = data.generated_schedule.objects;
-      console.log("Fetched Appointments: ", fetchedAppointments);
-      setAppointments(fetchedAppointments);
+      console.log("Received Data: ", data);
+
+      // Assuming data[0].generated_schedule is the array of appointments (Note the change here)
+      const fetchedAppointments =
+        data.length > 0 ? data[0].generated_schedule : [];
+
+      // Normalize exam_room and phoneNumber to ensure they are plain numbers/strings
+      const normalizedAppointments = fetchedAppointments.map((app) => ({
+        ...app,
+        exam_room: app.exam_room, // Assuming these are already numbers
+        phoneNumber: app.phoneNumber, // Assuming these are already numbers
+      }));
+
+      console.log("Fetched Appointments: ", normalizedAppointments);
+      setAppointments(normalizedAppointments);
     }
+
     fetchData();
   }, []);
 
@@ -68,7 +104,7 @@ export function AppointmentTable() {
               </Typography>
             </div>
           </div>
-          <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
+          <div className="flex flex-col items-center justify-between gap-4 md:flex-row mb-10">
             <Tabs value="all" className="w-full md:w-max ">
               <TabsHeader className="bg-gradient-to-tr from-blue-500/[.25] to-cyan-400/[.25] ">
                 {TABS.map(({ label, value }) => (
@@ -136,25 +172,15 @@ export function AppointmentTable() {
                           >
                             {patient}
                           </Typography>
-                          
                         </div>
-                      </td>
-                      <td className={classes}>
-                      <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="font-normal opacity-70"
-                          >
-                            {email}
-                          </Typography>
                       </td>
                       <td className={classes}>
                         <Typography
                           variant="small"
                           color="blue-gray"
-                          className="font-normal"
+                          className="font-normal opacity-70"
                         >
-                         {nature}
+                          {email}
                         </Typography>
                       </td>
                       <td className={classes}>
@@ -163,7 +189,16 @@ export function AppointmentTable() {
                           color="blue-gray"
                           className="font-normal"
                         >
-                      {start_time}
+                          {nature}
+                        </Typography>
+                      </td>
+                      <td className={classes}>
+                        <Typography
+                          variant="small"
+                          color="blue-gray"
+                          className="font-normal"
+                        >
+                          {start_time}
                         </Typography>
                       </td>
                       <td className={classes}>
@@ -202,7 +237,6 @@ export function AppointmentTable() {
                           {phoneNumber}
                         </Typography>
                       </td>
-                     
                     </tr>
                   );
                 }
@@ -210,6 +244,45 @@ export function AppointmentTable() {
             </tbody>
           </table>
         </CardBody>
+        <CardBody className="overflow-scroll mt-12 px-0">
+          <Typography className="pl-6" variant="h5" color="blue-gray">
+            All Appointments (Cards)
+          </Typography>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {appointments.map((appointment, index) => (
+              <Card key={index}>
+                <CardBody>
+                  <Typography variant="h5" color="blue-gray">
+                    Patient Name: {appointment.patient}
+                  </Typography>
+                  <Typography color="blue-gray" className="mt-1 ">
+                    Patient Email: {appointment.email}
+                  </Typography>
+                  <Typography variant="small" color="blue-gray">
+                    Nature: {appointment.nature}
+                  </Typography>
+                  <Typography variant="small" color="blue-gray">
+                    Start Time: {appointment.start_time} (Modified by MedSched
+                    AI)
+                  </Typography>
+                  <Typography variant="small" color="blue-gray">
+                    Urgency: {appointment.urgency}
+                  </Typography>
+                  <Typography variant="small" color="blue-gray">
+                    Exam Room: {appointment.exam_room}
+                  </Typography>
+                  <Typography variant="small" color="blue-gray">
+                    Phone: {appointment.phoneNumber}
+                  </Typography>
+                  <Typography variant="small" color="blue-gray">
+                    Doctors Note: {appointment.doctors_note}
+                  </Typography>
+                </CardBody>
+              </Card>
+            ))}
+          </div>
+        </CardBody>
+
         <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
           {/* Your footer content here */}
         </CardFooter>
